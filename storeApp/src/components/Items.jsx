@@ -1,48 +1,39 @@
 import React, { useEffect, useState } from "react";
 import Card from "./Card";
 import Skeleton from "./Skeleton";
-import useSingleproduct from "../hooks/useSingleproduct";
 
 const Items = () => {
+  const [data, setData] = useState([]); 
+  const [loading, setLoading] = useState(true);
 
-  useSingleproduct();
-  
-  const topRatedProducts = () => {
-    const filteredData = data.filter((item) => item.rating.rate >= 4);
-    setData(filteredData);
-  };
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch("https://fakestoreapi.com/products/"); 
+        const result = await response.json();
+        setData(result); 
+        setLoading(false); 
+      } catch (error) {
+        console.error("Error fetching data:", error);
+        setLoading(false);
+      }
+    };
+    fetchData();
+  }, []); 
 
-  const searchProducts = () => {
-    const filteredData = data.filter((item) =>
-      item.title.toLowerCase().includes(searchD.toLowerCase())
-    );
-    setData(filteredData); 
-  };
-
-  return data.length === 0 ? (
+  return loading ? (
     <Skeleton />
   ) : (
-    <div>
-      <div>
-        <input
-          type="text"
-          placeholder="Search products..."
-          value={searchD}
-          onChange={(e) => setSearch(e.target.value)} 
+    <div style={{ display: "flex", flexWrap: "wrap", gap: "1rem" }}>
+      {data.map((item) => (
+        <Card
+          key={item.id}
+          title={item.title}
+          image={item.image}
+          rating={item.rating.rate}
+          item =  {item}
         />
-        <button onClick={searchProducts}>Search</button>
-      </div>
-      <button onClick={topRatedProducts}>Top Rated Products</button>
-      <div style={{ display: "flex", flexWrap: "wrap", gap: "1rem" }}>
-        {data.map((item) => (
-          <Card
-            key={item.id}
-            title={item.title}
-            image={item.image}
-            rating={item.rating.rate} 
-          />
-        ))}
-      </div>
+      ))}
     </div>
   );
 };

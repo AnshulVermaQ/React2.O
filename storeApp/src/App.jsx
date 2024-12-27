@@ -1,28 +1,48 @@
 import './App.css';
 import Items from './components/Items';
-import {createBrowserRouter, RouterProvider} from 'react-router-dom';
 import Kids from './components/Kids';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import UserContext from './context/UseContext';
+import { Provider, useSelector } from 'react-redux';
+import AppStore from './store/Store';
+import Cart from './components/Cart';
 
 const appRouter = createBrowserRouter([
   {
-    path:"/",
-    element:<App/>
+    path: "/",
+    element: <Items />,
   },
   {
-    path:"/kids",
-    element:<Kids/>
+    path: "/kids",
+    element: <Kids />,
+  },
+  {
+    path:"/cart",
+    element:<Cart/>
   }
-])
+]);
 
+const Header = () => {
+  const cartItemsCount = useSelector((store) => store.cart.cardItems.length);
 
-
+  return (
+    <header>
+      <h1>Welcome to our store</h1>
+      <button className="btn btn-primary">Cart Items: {cartItemsCount}</button>
+    </header>
+  );
+};
 
 function App() {
   return (
-    <RouterProvider router={appRouter}>
-      <h1>Welcome to our store</h1>
-      <Items />
-    </RouterProvider>
+    <Provider store={AppStore}>
+      <UserContext.Provider value={{ name: "keshav kumar" }}>
+        <div>
+          <Header />
+          <RouterProvider router={appRouter} />
+        </div>
+      </UserContext.Provider>
+    </Provider>
   );
 }
 
