@@ -1,7 +1,7 @@
 import {User} from "../models/UserModel.js";
 import bcrypt from "bcryptjs";
 import { generateToken } from "../utils/generateToken.js";
-import {uploadMedia} from '../utils/cloudinary.js';
+import {deleteMediaFromCloudinary, uploadMedia} from '../utils/cloudinary.js';
 
 export const register = async (req,res) => {
     try {
@@ -116,42 +116,67 @@ export const getUserProfile = async(req,res) =>{
 }
 
 
-export const updateProfile = async (req,res) => {
+export const updateProfile = async (req, res) => {
     try {
         const userId = req.id;
-        const {name} = req.body;
+        const { name } = req.body;
         const profilePhoto = req.file;
 
+        if (!name || typeof name !== "string") {
+            return res.status(400).json({
+                success: false,
+                message: "Valid name is required",
+            });
+        }
+
+        if (!profilePhoto?.path) {
+            return res.status(400).json({
+                success: false,
+                message: "Invalid or missing profile photo",
+            });
+        }
+
         const user = await User.findById(userId);
-        if(!user){
+        if (!user) {
             return res.status(404).json({
-                message:"User not found",
-                success:false
-            }) 
+                success: false,
+                message: "User not found",
+            });
+        }
+        if (user.photoUrl) {
+            const publicId = user.photoUrl.split("/").pop().split(".")[0];
+            try {
+                await deleteMediaFromCloudinary(publicId);
+            } catch (err) {
+                console.error("Failed to delete old photo:", err);
+            }
         }
 
-        if(user.photoUrl){
-            const publicId = user.photoUrl.split("/").pop().split(".")[0]; 
-            deleteMediaFromCloudinary(publicId);
+        let photoUrl;
+        try {
+            const cloudResponse = await uploadMedia(profilePhoto.path);
+            photoUrl = cloudResponse.secure_url;
+        } catch (err) {
+            return res.status(500).json({
+                success: false,
+                message: "Failed to upload profile photo",
+            });
         }
-
-        const cloudResponse = await uploadMedia(profilePhoto.path);
-        const photoUrl = cloudResponse.secure_url;
-
-        const updatedData = {name, photoUrl};
-        const updatedUser = await User.findByIdAndUpdate(userId, updatedData, {new:true}).select("-password");
+        const updatedData = { name, photoUrl };
+        const updatedUser = await User.findByIdAndUpdate(userId, updatedData, {
+            new: true,
+        }).select("-password");
 
         return res.status(200).json({
-            success:true,
-            user:updatedUser,
-            message:"Profile updated successfully."
-        })
-
+            success: true,
+            user: updatedUser,
+            message: "Profile updated successfully.",
+        });
     } catch (error) {
-        console.log(error);
+        console.error(error);
         return res.status(500).json({
-            success:false,
-            message:"Failed to update profile"
-        })
+            success: false,
+            message: "Failed to update profile",
+        });
     }
-}
+};

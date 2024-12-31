@@ -40,12 +40,19 @@ const Profile = () => {
     if (file) setProfilePhoto(file);
   };
 
+  useEffect(() => {
+    if (data?.user) {
+      setName(data.user.name || "");
+    }
+  }, [data]);
+  
   const updateUserHandler = async () => {
     const formData = new FormData();
-    formData.append("name", user.name);
+    formData.append("name", name); 
     formData.append("profilePhoto", profilePhoto);
     await updateUser(formData);
   };
+  
 
   useEffect(() => {
     refetch();
@@ -72,7 +79,7 @@ const Profile = () => {
         <div className="flex flex-col items-center">
           <Avatar className="h-24 w-24 md:h-32 md:w-32 mb-4">
             <AvatarImage
-              src={user?.photoUrl || "https://github.com/shadcn.png"}
+              src={user?.photoUrl || "https://media.istockphoto.com/id/1300845620/vector/user-icon-flat-isolated-on-white-background-user-symbol-vector-illustration.jpg?s=612x612&w=0&k=20&c=yBeyba0hUkh14_jgv1OKqIH0CCSWU_4ckRkAoy2p73o="}
               alt="@shadcn"
             />
             <AvatarFallback>CN</AvatarFallback>

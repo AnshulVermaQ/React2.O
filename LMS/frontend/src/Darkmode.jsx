@@ -1,10 +1,11 @@
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@radix-ui/react-dropdown-menu";
-import { Button } from "./components/ui/button";
-import { Moon, Sun } from "lucide-react";
+import React from 'react'
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from './components/ui/dropdown-menu'
+import { Button } from './components/ui/button'
+import { Moon, Sun } from 'lucide-react'
+import { useTheme } from './components/ThemeProvider'
 
-
-const Darkmode = ()=> {
-
+const DarkMode = () => {
+  const {setTheme} = useTheme();
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -29,4 +30,4 @@ const Darkmode = ()=> {
   )
 }
 
-export  default Darkmode;
+export default DarkMode
