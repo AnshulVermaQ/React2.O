@@ -4,7 +4,7 @@ const ClaimModel = ({ user, onClose, onClaimSuccess }) => {
   
     const handleClaim = async () => {
   try {
-    const res = await fetch(`http://localhost:3000/api/users/${user._id}/claim`, {
+    const res = await fetch(`https://leaderboard-backend-git-main-anshul-vermas-projects-5094b606.vercel.app/${user._id}/claim`, {
       method: "POST",
       headers: {
         'Content-Type': 'application/json'
