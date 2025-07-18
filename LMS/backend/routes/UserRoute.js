@@ -1,7 +1,7 @@
 import express from 'express';
 import upload from '../utils/multer.js';
 import {getUserProfile, login, logout, register, updateProfile} from '../controller/UserController.js';
-import isAuthenticated from '../middlewares/isAuthenticated.js';
+import isAuthenticated from '../controller/middlewares/isAuthenticated.js';
 const router = express.Router();
 
 router.route("/register").post(register);

@@ -4,6 +4,8 @@ import { useLoadUserQuery } from "@/features/api/authApi";
 
 const MyLearning = () => { 
   const {data, isLoading} = useLoadUserQuery();
+ 
+  console.log(data?.user.enrolledCourses);
 
   const myLearning = data?.user.enrolledCourses || [];
   return (
@@ -13,7 +15,7 @@ const MyLearning = () => {
         {isLoading ? (
           <MyLearningSkeleton />
         ) : myLearning.length === 0 ? (
-          <p>You are not enrolled in any course.</p>
+          <p>You have not enrolled in any course.</p>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
             {myLearning.map((course, index) => (

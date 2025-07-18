@@ -89,31 +89,36 @@ export const logout = async(req,res) =>{
     }
 }
 
-
-export const getUserProfile = async(req,res) =>{
-    try{
-
-        const userId = req.id;
-        const user = await User.findById(userId).select("-password");
-        if(!user){
-            return res.status(404).json({
-                message:"Profile not found",
-                success:false
-            })
-        }
-        return res.status(200).json({
-            success:true,
-            user
-        })
-
-    }catch (error) {
-        console.log(error);
-        return res.status(500).json({
-            success:false,
-            message:"Failed to login"
-        })
+export const getUserProfile = async (req, res) => {
+    try {
+      const userId = req.id;
+      const user = await User.findById(userId).select("-password");
+  
+      if (!user) {
+        return res.status(404).json({
+          message: "Profile not found",
+          success: false,
+        });
+      }
+  
+      console.log("Enrolled Courses:", user.enrolledCourses); 
+      const populatedUser = await User.populate(user, "enrolledCourses");
+  
+      console.log("Populated User:", populatedUser);
+  
+      return res.status(200).json({
+        success: true,
+        user: populatedUser,
+      });
+    } catch (error) {
+      console.log(error);
+      return res.status(500).json({
+        success: false,
+        message: "Failed to load profile",
+      });
     }
-}
+  };
+  
 
 
 export const updateProfile = async (req, res) => {

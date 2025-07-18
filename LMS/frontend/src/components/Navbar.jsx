@@ -45,11 +45,11 @@ const Navbar = () => {
       <div className='max-w-7xl mx-auto hidden md:flex justify-between items-center gap-10 h-full'>
         <div className='flex gap-2 items-center'>
           <School size={"22"} />
-          <Link to="/"><h1 className='hidden md:block font-bold text-2xl '>OneLearn</h1></Link>
+          <Link to="/"><h1 className='hidden md:block font-bold text-2xl cursor-pointer '>OneLearn</h1></Link>
         </div>
 
 
-        <div className='flex items-center gap-8'>
+        <div className='flex items-center gap-8 cursor-pointer'>
           {
             user ? (
               <DropdownMenu>
@@ -64,7 +64,7 @@ const Navbar = () => {
                   <DropdownMenuSeparator />
                   <DropdownMenuItem><Link to="my-learning">My learning</Link></DropdownMenuItem>
                   <DropdownMenuItem><Link to="profile">Profile</Link></DropdownMenuItem>
-                  <DropdownMenuItem onClick={logoutHandler}>Logout</DropdownMenuItem>
+                  <DropdownMenuItem onClick={logoutHandler} className="font-bold">Logout</DropdownMenuItem>
                   <DropdownMenuItem ><Link to="/admin/dashboard">Dashboared</Link></DropdownMenuItem>
 
                 </DropdownMenuContent>
@@ -72,7 +72,7 @@ const Navbar = () => {
             ) : (
               <div className="flex items-center gap-2">
                 <Button variant="outline"><Link to="/login">Login</Link></Button>
-                <Button><Link to="/signup">Signup</Link></Button>
+                <Button><Link to="/signup"></Link></Button>
               </div>
             )
           }

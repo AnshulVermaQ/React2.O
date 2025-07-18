@@ -23,6 +23,7 @@ const appRouter = createBrowserRouter([
   {
     path: "/",
     element: <MainLayout />,
+    
     children: [
       {
         path: "/",
@@ -51,19 +52,16 @@ const appRouter = createBrowserRouter([
       },
       {
         path: "course-detail/:courseId",
-        element:<CourseDetail />
-      
-        
+        element: <CourseDetail />,
       },
       {
         path: "course-progress/:courseId",
-        element:<CourseProgress />
-      
-        
+        element: <CourseProgress />,
       },
       {
         path: "admin",
         element: <Sidebar />,
+  
         children: [
           {
             path: "dashboard",
@@ -89,16 +87,13 @@ const appRouter = createBrowserRouter([
             path: "course/:courseId/lecture/:lectureId",
             element: <EditLecture />,
           },
-          
-    
         ],
-       
-
       },
       
     ],
   },
 ]);
+
 
 const App = () => {
   return (

@@ -76,8 +76,8 @@ const CourseProgress = () => {
   };
 
   return (
-    <div className="max-w-7xl mx-auto p-4 mt-20">
-    
+    <div className="max-w-7xl mx-auto p-4">
+     
       <div className="flex justify-between mb-4">
         <h1 className="text-2xl font-bold">{courseTitle}</h1>
         <Button
@@ -95,16 +95,14 @@ const CourseProgress = () => {
       </div>
 
       <div className="flex flex-col md:flex-row gap-6">
- 
+       
         <div className="flex-1 md:w-3/5 h-fit rounded-lg shadow-lg p-4">
           <div>
             <video
-              src={currentLecture?.videoUrl || initialLecture.videoUrl}
+              src="/Video.mp4"
               controls
               className="w-full h-auto md:rounded-lg"
-              onPlay={() =>
-                handleLectureProgress(currentLecture?._id || initialLecture._id)
-              }
+              
             />
           </div>
           <div className="mt-2 ">
@@ -120,6 +118,7 @@ const CourseProgress = () => {
             </h3>
           </div>
         </div>
+        {/* Lecture Sidebar  */}
         <div className="flex flex-col w-full md:w-2/5 border-t md:border-t-0 md:border-l border-gray-200 md:pl-4 pt-4 md:pt-0">
           <h2 className="font-semibold text-xl mb-4">Course Lecture</h2>
           <div className="flex-1 overflow-y-auto">
