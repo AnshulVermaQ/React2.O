@@ -4,7 +4,7 @@ import LeaderBoard from "./components/LeaderBoard";
 import ClaimHistory from "./components/ClaimHistory";
 import ClaimModel from "./components/ClaimModel.jsx";
 
-const BASE_URL = "http://localhost:3000";
+const BASE_URL = "https://leaderboard-backend-git-main-anshul-vermas-projects-5094b606.vercel.app/";
 
 const App = () => {
   const [users, setUsers] = useState([]);
