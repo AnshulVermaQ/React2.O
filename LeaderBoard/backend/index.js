@@ -12,7 +12,7 @@ const PORT = process.env.PORT || 3000;
 connectDB();
 app.use(express.urlencoded({ extended: true }));
 app.use(cors({
-    origin: 'https://leader-board-frontend-git-main-anshul-vermas-projects-5094b606.vercel.app/', 
+    origin: 'https://localhost:5173/', 
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true,
 }));
