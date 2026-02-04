@@ -62,9 +62,7 @@ If you're getting started and need assistance or face any bugs, join our active 
 
 👉 **Cool Gradients**: Enhances visuals with stylish gradients using Tailwind CSS for cards, buttons, etc.
 
-👉 **Responsive**: Ensures seamless functionality and aesthetics across all devices
 
-and many more, including code architecture and reusability
 
 ## <a name="quick-start">🤸 Quick Start</a>
 
